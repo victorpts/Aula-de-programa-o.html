@@ -1,180 +1,56 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
- <HEAD>
-  <TITLE> Jogo da Velha </TITLE>
-  <META NAME="Generator" CONTENT="EditPlus">
-  <META NAME="Author" CONTENT="">
-  <META NAME="Keywords" CONTENT="">
-  <META NAME="Description" CONTENT="">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Colégio Modelo</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Logo do Colégio Modelo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">INÍCIO</a></li>
+        <li><a href="#">SOBRE</a></li>
+        <li><a href="#">CONTATO</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <style>
+  <main>
+    <section class="sobre">
+      <h1>Sobre Nós</h1>
+      <img src="imagem-escola.png" alt="Imagem do Colégio Modelo">
+      <p>O Colégio Modelo é uma instituição de ensino de qualidade, que busca formar cidadãos críticos e comprometidos com a sociedade.</p>
+    </section>
 
-    table {width:550px; height:350px; border:1px solid black}
-	table tr { background-color:red; font:bold 46px Verdana; color:white}
-	table tr td {text-align:center; width:33.33%}
-	table tr td:hover {cursor:pointer}
-	input[type=button] {width:150px; height:50px; font-size:20px; font-weight:bold; margin-bottom:20px}
-	fieldset {font-size:20; font-weight:bold; border:2px solid blue; width: 300px; margin-bottom:25px}
+    <section class="contato">
+      <h1>Contato</h1>
+      <form>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email">
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem"></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
 
-  </style>
+    <section class="localizacao">
+      <h1>Localização</h1>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.5353173123144!2d-50.075158599999995!3d-23.040827999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94eaa1bc9e3c9d55%3A0x5f42fd0a1ba78aa3!2sCol%C3%A9gio%20Estadual%20Dr.%20Generoso%20Marques!5e0!3m2!1spt-BR!2sbr!4v1682455767357!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+  </main>
 
-  <script>
-
-		//DEIXA A DIV GAME ESCONDIDA
-		window.onload =	function() { document.getElementById('game').style.visibility = 'hidden' };
-		
-		function Jogador(nome, forma) {
-			this.nome = nome;
-			this.forma = forma;
-		}
-		
-		var jogador1, jogador2;
-		//Jogador da rodada
-		var jogadorAtual;
-		var formas = ['X', 'O'];
-		var index = null;
-
-		/*
-			0 1 2
-			3 4 5
-			6 7 8
-		*/
-		var tabuleiro = new Array(9);
-
-
-		initGame = function() {
-			var nomeJogador1 = document.getElementById('jogador1').value;
-			var nomeJogador2 = document.getElementById('jogador2').value;
-			jogador1 = new Jogador(nomeJogador1, 0); //X
-			jogador2 = new Jogador(nomeJogador2, 1); //O
-
-			jogadorAtual = jogador1;
-			setLabelJogadorAtual();
-
-			//APOS DEFINIÇÃO DE JOGADORES, EXIBE A DIV E INICIA JOGO
-			document.getElementById('game').style.visibility = 'visible';
-			
-		}
-
-		/*Reinicia a partida*/
-		reset = function() { window.location.reload(); }
-		
-		/*Seta o nome do jogador da rodada na página HTML*/
-		setLabelJogadorAtual = function() {
-			document.getElementById('jogadorAtual').innerHTML = 'Jogador atual:  ' + jogadorAtual.nome;
-		}
-
-		/*Verifica se o tabuleiro está completamente preenchido, se estiver, significa que ninguém venceu a rodada*/
-		tabuleiroIsFilled = function() {
-			var preenchidos = 0;
-				for(var i = 0; i < tabuleiro.length; i++)
-					if(tabuleiro[i]	!= undefined) 
-						preenchidos++;
-				return preenchidos == tabuleiro.length;
-		}
-
-		/*Verifica a existência de ocorrências de um mesmo elemento(X ou O) nas linhas do tabuleiro, procurando um vencedor*/
-		allElementsInSomeLine = function() {
-			for( var i = 0; i < 7; i += 3) {
-				if ( tabuleiro[i] == 'X' && tabuleiro[i + 1] == 'X' && tabuleiro[i + 2] == 'X' ) { 
-					alert (jogador1.nome + ' wins!!!');
-					reset();
-				}
-				if ( tabuleiro[i] == 'O' && tabuleiro[i + 1] == 'O' && tabuleiro[i + 2] == 'O' ) {
-					alert (jogador2.nome + ' wins!!!');
-					reset();
-				}
-			}
-		}
-
-		/*Verifica a existência de ocorrências de um mesmo elemento(X ou O) nas colunas do tabuleiro, procurando um vencedor*/
-		allElementsInSomeColumn = function() {
-			for( var i = 0; i < 3; i++) {
-				if ( tabuleiro[i] == 'X' && tabuleiro[i + 3] == 'X' && tabuleiro[i + 6] == 'X' ) { 
-					alert (jogador1.nome + ' wins!!!');
-					reset();
-				}
-				if ( tabuleiro[i] == 'O' && tabuleiro[i + 3] == 'O' && tabuleiro[i + 6] == 'O' ) {
-					alert (jogador2.nome + ' wins!!!');
-					reset();
-				}
-			}
-
-		}
-
-		/*Verifica a existência de ocorrências de um mesmo elemento(X ou O) nas diagonais do tabuleiro, procurando um vencedor*/
-		allElementsInSomeDiagonal = function() {
-			if ( (tabuleiro[0] == 'X' && tabuleiro[4] == 'X' && tabuleiro[8] == 'X') ||
-	 			 (tabuleiro[2] == 'X' && tabuleiro[4] == 'X' && tabuleiro[6] == 'X')) {
-					alert (jogador1.nome + ' wins!!!');
-				reset();
-			} else if ( (tabuleiro[0] == 'O' && tabuleiro[4] == 'O' && tabuleiro[8] == 'O') ||
-					    (tabuleiro[2] == 'O' && tabuleiro[4] == 'O' && tabuleiro[6] == 'O') ) {
-					alert (jogador2.nome + ' wins!!!');
-				reset();
-			} 
-		}
-
-		/*Preenche a célula da tabela HTML escolhida pelo usuário ao clicar, além de cuidar do jogador atual da rodada e chamar as funções
-		  de verificação de algum ganhador */
-		setOnCeil = function(cel, pos) { 
-				if(tabuleiro[pos] == undefined) {
-					cel.innerHTML = formas[jogadorAtual.forma];
-					tabuleiro[pos] = formas[jogadorAtual.forma];
-
-					//define o jogador da rodada
-					(jogadorAtual.forma == 0) ? jogadorAtual = jogador2 : jogadorAtual = jogador1;
-					setLabelJogadorAtual();
-
-				} else alert('Ops. Already marked value for this =/');
-
-				allElementsInSomeLine();
-				allElementsInSomeColumn();
-				allElementsInSomeDiagonal();
-	
-				if ( tabuleiroIsFilled() ) {
-					alert ('Nobody wins! :(. Try Again');
-					reset();
-				}
-				
-			
-		}
-
-  </script>
- </HEAD>
-
- <BODY>
-	<fieldset>
-		<legend> Jogadores </legend>
-		<label for="Jogador 1"> Jogador 1: </label>
-		<input type="text" id="jogador1"/>
-		<label for="Jogador 1"> Jogador 2: </label>
-		<input type="text" id="jogador2"/>
-
-		<input type="button" value="Iniciar" style="margin-top:4px; height:25px; width:150px; font-size:14px" onclick="javascript: initGame();"/>
-	</fieldset>
-
-	<h3 id="jogadorAtual"> </h3>
-
-<div id="game">
-	<table cellpadding="0" cellspacing="0">
-		<tr border="1"> 
-			<td onclick="javascript: setOnCeil(this, 0);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-			<td onclick="javascript: setOnCeil(this, 1);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-			<td onclick="javascript: setOnCeil(this, 2);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-		</tr>
-		<tr> 
-			<td onclick="javascript: setOnCeil(this, 3);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-			<td onclick="javascript: setOnCeil(this, 4);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-			<td onclick="javascript: setOnCeil(this, 5);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-		</tr>
-		<tr> 
-			<td onclick="javascript: setOnCeil(this, 6);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-			<td onclick="javascript: setOnCeil(this, 7);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-			<td onclick="javascript: setOnCeil(this, 8);" onmouseover="javascript: this.style.backgroundColor = 'blue'" onmouseout="javascript: this.style.backgroundColor = 'red'"> &nbsp; </td>
-		</tr>
-	</table>
-</div>
-  
- </BODY>
-</HTML>
+  <footer>
+    <div class="logo">
+      <img src="logo.png" alt="Logo do Colégio Modelo">
+    </div>
+    <p>Colégio Modelo &copy; 2023. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
